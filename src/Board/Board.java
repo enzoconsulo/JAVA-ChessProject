@@ -8,6 +8,7 @@ public class Board {
 	private Piece[][] pieces;
 	
 	public Board(Integer rows,Integer columns) {
+		if (rows<1 || columns < 1) throw new BoardException("ERROR! Rows and Columns must be bigger than 1");
 		this.rows = rows;
 		this.columns = columns;
 		pieces = new Piece[rows][columns];
@@ -30,14 +31,17 @@ public class Board {
 	
 
 	public Piece piece(int row , int column) {
+		if(!positionExists(new Position(row,column)))throw new BoardException("ERROR! The position"+ " '"+(char) ('a' + row)+  column +"' " +" is Invalid");
 		return pieces[row][column];
 	}
 	
 	public Piece piece(Position position) {
+		if(!positionExists(position))throw new BoardException("ERROR! The position"+ " '"+(char) ('a' + position.getRow()) + position.getColumn() +"' " +" is Invalid");
 		return pieces[position.getRow()][position.getColumn()];
 	}
 	
 	public void placePiece(Piece piece, Position position) {
+		if(thereIsAPiece(position))throw new BoardException("ERROR! The position "+" '"+(char) ('a' + position.getRow()) + position.getColumn() +"' " +"already have a piece");
 		piece.position = position;
 		pieces[position.getRow()][position.getColumn()] = piece;
 	}
@@ -55,6 +59,12 @@ public class Board {
 			&& position.getColumn() <= 7)
 			return true;
 		
+		return false;
+	}
+	
+	public boolean thereIsAPiece(Position position) {
+		if(!positionExists(position))throw new BoardException("ERROR! The position"+ " '"+(char) ('a' + position.getRow()) + position.getColumn() +"' " +" is Invalid");
+		if(piece(position)!=null)return true;
 		return false;
 	}
 	
