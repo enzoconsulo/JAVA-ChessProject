@@ -51,7 +51,8 @@ public class ChessMatch {
 	}
 	
 	private void validateSourcePosition(ChessPosition cp) {
-		if (!board.thereIsAPiece(cp.toPosition()))throw new ChessException("Has no piece to move in '"+cp+"' Only moves from 'a1' to 'h8' are valid");
+		if(!board.thereIsAPiece(cp.toPosition()))throw new ChessException("Has no piece to move in '"+cp+"' Only moves from 'a1' to 'h8' are valid");
+		if(!board.piece(cp.toPosition()).isThereAnyPossibleMove())throw new ChessException("Has no possible move in '"+cp+"' ");
 	}
 	
 	private Piece makeMove(ChessPosition source,ChessPosition target) {
