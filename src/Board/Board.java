@@ -28,26 +28,34 @@ public class Board {
 	public Piece[][] getPieces() {
 		return pieces;
 	}
-	
+
+	private String convertFormatPosition(Position position) {
+		char character = ((char) ('a' + position.getColumn()));
+		int integer = (8-position.getRow());
+		return "'" + character + integer + "'";
+	}
 
 	public Piece piece(int row , int column) {
-		if(!positionExists(new Position(row,column)))throw new BoardException("ERROR! The position"+ " '"+(char) ('a' + row)+  column +"' " +" is Invalid");
+		if(!positionExists(new Position(row,column)))throw new BoardException("ERROR! The position"+ convertFormatPosition(new Position(row,column)) +" is Invalid");
 		return pieces[row][column];
 	}
 	
 	public Piece piece(Position position) {
-		if(!positionExists(position))throw new BoardException("ERROR! The position"+ " '"+(char) ('a' + position.getRow()) + position.getColumn() +"' " +" is Invalid");
+		if(!positionExists(position))throw new BoardException("ERROR! The position "+ convertFormatPosition(position) +" is Invalid");
 		return pieces[position.getRow()][position.getColumn()];
 	}
 	
 	public void placePiece(Piece piece, Position position) {
-		if(thereIsAPiece(position))throw new BoardException("ERROR! The position "+" '"+(char) ('a' + position.getRow()) + position.getColumn() +"' " +"already have a piece");
+		if(thereIsAPiece(position))throw new BoardException("ERROR! The position "+convertFormatPosition(position) +" already have a piece");
 		piece.position = position;
 		pieces[position.getRow()][position.getColumn()] = piece;
 	}
 	
 	public Piece removePiece(Position position) {
-		Piece temp = pieces[position.getRow()][position.getColumn()];
+		if(!positionExists(position))throw new BoardException("ERROR! The position "+ convertFormatPosition(position) +" is Invalid");
+		if(piece(position)==null)return null;
+		Piece temp = piece(position);
+		temp.position = null;
 		pieces[position.getRow()][position.getColumn()] = null;
 		return temp;
 	}
@@ -63,7 +71,7 @@ public class Board {
 	}
 	
 	public boolean thereIsAPiece(Position position) {
-		if(!positionExists(position))throw new BoardException("ERROR! The position"+ " '"+(char) ('a' + position.getRow()) + position.getColumn() +"' " +" is Invalid");
+		if(!positionExists(position))throw new BoardException("ERROR! The position "+ convertFormatPosition(position) +" is Invalid");
 		if(piece(position)!=null)return true;
 		return false;
 	}
