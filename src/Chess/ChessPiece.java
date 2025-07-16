@@ -13,4 +13,13 @@ public class ChessPiece extends Piece{
 		this.color = color;
 		moveCount = 0;
 	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public Integer getMoveCount() {
+		return moveCount;
+	}
+	
 }
