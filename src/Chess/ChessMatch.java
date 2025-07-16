@@ -19,6 +19,7 @@ public class ChessMatch {
 
 	public ChessMatch() {
 		board = new Board(8, 8);
+		checkMate = false;
 		InitialSetup();
 	}
 
@@ -30,6 +31,10 @@ public class ChessMatch {
 		return (ChessPiece[][]) board.getPieces();
 	}
 	
+	public Boolean getCheckMate() {
+		return checkMate;
+	}
+
 	public Position coord(char column,Integer row) {
 		ChessPosition cp = new ChessPosition(column, row);
 		return cp.toPosition();

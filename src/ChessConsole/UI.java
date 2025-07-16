@@ -74,6 +74,16 @@ public class UI {
 		ChessPosition cp = new ChessPosition(inputR[0],((int) inputR[1]-'0'));
 		return cp;
 	}
-		
 	
+	/*public static void clearScreen() {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+		}
+	*/
+	
+	public static void clearScreen() {
+	    for (int i = 0; i < 100; i++) {        //chunking to use on Eclipse console, but the right is the comment above
+	        System.out.println();
+	    }
+	}
 }
