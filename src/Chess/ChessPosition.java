@@ -40,5 +40,12 @@ public class ChessPosition {
 		int row = 8-position.getRow();
 		return new ChessPosition(column,row);
 	}
+
+	@Override
+	public String toString() {
+		return "" + column +  row ;
+	}
+	
+	
 	
 }

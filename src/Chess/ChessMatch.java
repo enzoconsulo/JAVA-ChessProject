@@ -1,6 +1,7 @@
 package Chess;
 
 import Board.Board;
+import Board.Piece;
 import Board.Position;
 import Chess.Pieces.King;
 import Chess.Pieces.Rook;
@@ -38,9 +39,28 @@ public class ChessMatch {
 		board.placePiece(new King(board,Color.BLACK), coord('e',8));
 		board.placePiece(new King(board,Color.WHITE), coord('e',1));
 		
-		board.placePiece(new Rook(board,Color.BLACK), coord('a',1));
+		board.placePiece(new Rook(board,Color.WHITE), coord('a',1));
 		board.placePiece(new Rook(board,Color.BLACK), coord('a',8));
 		board.placePiece(new Rook(board,Color.WHITE), coord('h',1));
-		board.placePiece(new Rook(board,Color.WHITE), coord('h',8));
+		board.placePiece(new Rook(board,Color.BLACK), coord('h',8));
 	}
+	
+	private void validateSourcePosition(ChessPosition cp) {
+		if (!board.thereIsAPiece(cp.toPosition()))throw new ChessException("Has no piece to move in '"+cp+"' Only moves from 'a1' to 'h8' are valid");
+	}
+	
+	private Piece makeMove(ChessPosition source,ChessPosition target) {
+		Piece pEated = board.removePiece(target.toPosition());
+		Piece p = board.removePiece(source.toPosition());
+		board.placePiece(p, target.toPosition());
+		return pEated;
+	}
+	
+	public ChessPiece performChessMove(ChessPosition sourcePosition,ChessPosition targetPosition) {
+		validateSourcePosition(sourcePosition);
+		return (ChessPiece) makeMove(sourcePosition,targetPosition);
+
+	}
+	
+	
 }

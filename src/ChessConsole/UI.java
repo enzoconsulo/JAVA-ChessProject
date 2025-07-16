@@ -42,7 +42,6 @@ public class UI {
 		}
 		System.out.println("----------------------------");
 		System.out.println("  | a  b  c  d  e  f  g  h");
-		readChessPosition();
 	}
 
 	private static String printPiece(ChessPiece piece) {
@@ -56,25 +55,24 @@ public class UI {
          }
 	}	 
 	
-	private static void readChessPosition(){
-		Scanner sc = new Scanner(System.in);
+	public static ChessPosition readChessPosition(Scanner sc){
 		boolean sucess = false;
 		char[] inputR = new char[2] ;
-		System.out.print("\n"
-						+"                                    char   int\n"
-						+"Type the posicion to read format->(Column)(Row): ");
-		while(!sucess) {
+		while(sucess == false) {
 			String input = sc.nextLine();
 			if (input.length() == 2) {
 				inputR[0] = input.toLowerCase().charAt(0);
 				inputR[1] = input.charAt(1);
 				sucess = true;
 			}else {
-				System.out.println("Invalid Format!");
+				System.out.print("\n"
+						+"                                    char   int\n"
+						+"Type the posicion to read format->(Column)(Row) ! ");
 			}
 		}
+		
 		ChessPosition cp = new ChessPosition(inputR[0],((int) inputR[1]-'0'));
-		sc.close();
+		return cp;
 	}
 		
 	
