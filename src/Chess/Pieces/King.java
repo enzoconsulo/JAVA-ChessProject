@@ -24,10 +24,83 @@ public class King extends ChessPiece{
 		
 		//above
 		p.setValues(position.getRow() - 1, position.getColumn());
-		if(getBoard().positionExists(p)) {
-			temp[p.getRow()][p.getColumn()] = true;
+		if(getBoard().positionExists(p)){
+			if(getBoard().piece(p) != null && !isThereOpponentPiece(p)) {
+				temp[p.getRow()][p.getColumn()] = false;
+			}else {
+				temp[p.getRow()][p.getColumn()] = true;
+			}
 		}
 		
+		//under
+		p.setValues(position.getRow() + 1, position.getColumn());
+		if(getBoard().positionExists(p)) {
+			if(getBoard().piece(p) != null && !isThereOpponentPiece(p)) {
+				temp[p.getRow()][p.getColumn()] = false;
+			}else {
+				temp[p.getRow()][p.getColumn()] = true;
+			}
+		}
+		
+		//left
+		p.setValues(position.getRow(), position.getColumn()-1);
+		if(getBoard().positionExists(p)) {
+			if(getBoard().piece(p) != null && !isThereOpponentPiece(p)) {
+				temp[p.getRow()][p.getColumn()] = false;
+			}else {
+				temp[p.getRow()][p.getColumn()] = true;
+			}
+		}
+		
+		//right
+		p.setValues(position.getRow(), position.getColumn()+1);
+		if(getBoard().positionExists(p)) {
+			if(getBoard().piece(p) != null && !isThereOpponentPiece(p)) {
+				temp[p.getRow()][p.getColumn()] = false;
+			}else {
+				temp[p.getRow()][p.getColumn()] = true;
+			}
+		}
+		
+		//northwest
+		p.setValues(position.getRow()- 1, position.getColumn()-1);
+		if(getBoard().positionExists(p)) {
+			if(getBoard().piece(p) != null && !isThereOpponentPiece(p)) {
+				temp[p.getRow()][p.getColumn()] = false;
+			}else {
+				temp[p.getRow()][p.getColumn()] = true;
+			}
+		}
+		
+		//northeast
+		p.setValues(position.getRow()-1, position.getColumn()+1);
+		if(getBoard().positionExists(p)) {
+			if(getBoard().piece(p) != null && !isThereOpponentPiece(p)) {
+				temp[p.getRow()][p.getColumn()] = false;
+			}else {
+				temp[p.getRow()][p.getColumn()] = true;
+			}
+		}
+		
+		//southwest
+		p.setValues(position.getRow()+1, position.getColumn()-1);
+		if(getBoard().positionExists(p)) {
+			if(getBoard().piece(p) != null && !isThereOpponentPiece(p)) {
+				temp[p.getRow()][p.getColumn()] = false;
+			}else {
+				temp[p.getRow()][p.getColumn()] = true;
+			}
+		}
+		
+		//southeast
+		p.setValues(position.getRow()+1, position.getColumn()+1);
+		if(getBoard().positionExists(p)) {
+			if(getBoard().piece(p) != null && !isThereOpponentPiece(p)) {
+				temp[p.getRow()][p.getColumn()] = false;
+			}else {
+				temp[p.getRow()][p.getColumn()] = true;
+			}
+		}
 		
 		return temp;
 	}

@@ -28,7 +28,7 @@ public class Rook extends ChessPiece{
 			temp[p.getRow()][p.getColumn()] = true;
 			p.setRow(p.getRow() - 1);
 		}
-		if(getBoard().positionExists(p) && isThereOpponentPiece(p)) { //if while stopped, have a piece,is a valid position and is a opponent piece
+		if(getBoard().positionExists(p) && isThereOpponentPiece(p)) { //when while stopped and is a valid position and is a opponent piece
 			temp[p.getRow()][p.getColumn()] = true;
 		}
 		
