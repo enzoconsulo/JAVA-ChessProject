@@ -55,6 +55,11 @@ public class ChessMatch {
 		if(!board.piece(cp.toPosition()).isThereAnyPossibleMove())throw new ChessException("Has no possible move in '"+cp+"' ");
 	}
 	
+	private void validateTargetPosition(ChessPosition source, ChessPosition target) {
+		Piece actualPiece = getBoard().piece(source.toPosition());
+		if(!actualPiece.possibleMove(target.toPosition()))throw new ChessException("Thats not a possible move to '"+ source + "' do");	
+	}
+	
 	private Piece makeMove(ChessPosition source,ChessPosition target) {
 		Piece pEated = board.removePiece(target.toPosition());
 		Piece p = board.removePiece(source.toPosition());
@@ -64,6 +69,7 @@ public class ChessMatch {
 	
 	public ChessPiece performChessMove(ChessPosition sourcePosition,ChessPosition targetPosition) {
 		validateSourcePosition(sourcePosition);
+		validateTargetPosition(sourcePosition,targetPosition);
 		return (ChessPiece) makeMove(sourcePosition,targetPosition);
 
 	}
