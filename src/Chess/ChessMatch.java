@@ -19,6 +19,8 @@ public class ChessMatch {
 
 	public ChessMatch() {
 		board = new Board(8, 8);
+		turn = 1;
+		currentPlayer = Color.WHITE;
 		checkMate = false;
 		InitialSetup();
 	}
@@ -33,6 +35,14 @@ public class ChessMatch {
 	
 	public Boolean getCheckMate() {
 		return checkMate;
+	}
+	
+	public Integer getTurn() {
+		return turn;
+	}
+
+	public Color getCurrentPlayer() {
+		return currentPlayer;
 	}
 
 	public Position coord(char column,Integer row) {
@@ -53,6 +63,7 @@ public class ChessMatch {
 	private void validateSourcePosition(ChessPosition cp) {
 		if(!board.thereIsAPiece(cp.toPosition()))throw new ChessException("Has no piece to move in '"+cp+"' Only moves from 'a1' to 'h8' are valid");
 		if(!board.piece(cp.toPosition()).isThereAnyPossibleMove())throw new ChessException("Has no possible move in '"+cp+"' ");
+		if(currentPlayer != ((ChessPiece) board.piece(cp.toPosition())).getColor())throw new ChessException("Thats not the '"+((ChessPiece) board.piece(cp.toPosition())).getColor()+"' turn");
 	}
 	
 	private void validateTargetPosition(ChessPosition source, ChessPosition target) {
@@ -70,6 +81,7 @@ public class ChessMatch {
 	public ChessPiece performChessMove(ChessPosition sourcePosition,ChessPosition targetPosition) {
 		validateSourcePosition(sourcePosition);
 		validateTargetPosition(sourcePosition,targetPosition);
+		nextTurn();
 		return (ChessPiece) makeMove(sourcePosition,targetPosition);
 
 	}
@@ -77,6 +89,11 @@ public class ChessMatch {
 	public boolean[][] possibleMoves(ChessPosition source){
 		validateSourcePosition(source);
 		return board.piece(source.toPosition()).possibleMoves();
+	}
+	
+	public void nextTurn() {
+		turn++;
+		currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
 	}
 	
 	

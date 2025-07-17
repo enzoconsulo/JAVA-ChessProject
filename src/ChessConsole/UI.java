@@ -33,6 +33,7 @@ public class UI {
 	public static void printTable(ChessMatch cm) {
 		Board board = cm.getBoard();
 		Piece[][] pieces = board.getPieces();
+		System.out.println("Current turn: " + cm.getCurrentPlayer());
 		for (int i = 0; i < board.getRows(); i++) {
 			System.out.print(8 - i +" |");
 			for (int j = 0; j < board.getColumns(); j++) {
@@ -47,6 +48,7 @@ public class UI {
 	public static void printTable(ChessMatch cm,boolean[][] sourcePossibleMoves) {
 		Board board = cm.getBoard();
 		Piece[][] pieces = board.getPieces();
+		System.out.println("Current turn: " + cm.getCurrentPlayer());
 		for (int i = 0; i < board.getRows(); i++) {
 			System.out.print(8 - i +" |");
 			for (int j = 0; j < board.getColumns(); j++) {
