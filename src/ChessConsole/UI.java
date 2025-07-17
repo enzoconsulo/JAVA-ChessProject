@@ -50,11 +50,7 @@ public class UI {
 		for (int i = 0; i < board.getRows(); i++) {
 			System.out.print(8 - i +" |");
 			for (int j = 0; j < board.getColumns(); j++) {
-				if(sourcePossibleMoves[i][j]) {
-				System.out.print(printPiece((ChessPiece) pieces[i][j],true));
-				}else{
-				System.out.print(printPiece((ChessPiece) pieces[i][j],false));
-				}
+				System.out.print(printPiece((ChessPiece) pieces[i][j],sourcePossibleMoves[i][j]));
 			}
 		System.out.println();
 		}
