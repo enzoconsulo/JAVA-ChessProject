@@ -1,6 +1,8 @@
 package ChessConsole;
 
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import Board.Board;
 import Board.Piece;
@@ -33,7 +35,9 @@ public class UI {
 	public static void printTable(ChessMatch cm) {
 		Board board = cm.getBoard();
 		Piece[][] pieces = board.getPieces();
-		System.out.println("Current turn: " + cm.getCurrentPlayer());
+		printCapturedPieces(cm);
+		System.out.println("Current turn: " + cm.getTurn());
+		System.out.println("Waiting "+cm.getCurrentPlayer()+" to play...");
 		for (int i = 0; i < board.getRows(); i++) {
 			System.out.print(8 - i +" |");
 			for (int j = 0; j < board.getColumns(); j++) {
@@ -48,7 +52,9 @@ public class UI {
 	public static void printTable(ChessMatch cm,boolean[][] sourcePossibleMoves) {
 		Board board = cm.getBoard();
 		Piece[][] pieces = board.getPieces();
-		System.out.println("Current turn: " + cm.getCurrentPlayer());
+		printCapturedPieces(cm);
+		System.out.println("Current turn: " + cm.getTurn());
+		System.out.println("Waiting "+cm.getCurrentPlayer()+" to play...");
 		for (int i = 0; i < board.getRows(); i++) {
 			System.out.print(8 - i +" |");
 			for (int j = 0; j < board.getColumns(); j++) {
@@ -110,5 +116,34 @@ public class UI {
 	    }
 	}
 	
+	public static void printCapturedPieces(ChessMatch cm) {
+		List<Piece> list = cm.getCapturedPieces();
+		
+		List<Piece> whitePieces = list.stream()
+				.map(p->(ChessPiece) p)
+				.filter(x->x.getColor() == Color.WHITE)
+				.collect(Collectors.toList());
+		
+		List<Piece> blackPieces = list.stream()
+				.map(p->(ChessPiece) p)
+				.filter(x->x.getColor() == Color.BLACK)
+				.collect(Collectors.toList());
+		
+		System.out.println("Captured Pieces");
+		
+		System.out.print("White :");
+		if(whitePieces.isEmpty())System.out.println(ANSI_WHITE +"[ ]" + ANSI_RESET);
+			for(Piece p : whitePieces) {
+				System.out.print(ANSI_WHITE +"[" + p +"]" + ANSI_RESET);
+			}
+		System.out.println();
+		
+		System.out.print("Black :");
+		if(blackPieces.isEmpty())System.out.print(ANSI_BLACK +"[ ]" + ANSI_RESET);
+			for(Piece p : blackPieces) {
+				System.out.print(ANSI_BLACK +" [" + p +"] " + ANSI_RESET);
+			}
+		System.out.println();
+	}
 	
 }

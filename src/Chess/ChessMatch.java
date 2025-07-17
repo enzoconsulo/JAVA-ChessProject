@@ -1,5 +1,8 @@
 package Chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Board.Board;
 import Board.Piece;
 import Board.Position;
@@ -16,6 +19,9 @@ public class ChessMatch {
 	private ChessPiece promoted;
 	
 	private Board board;
+	
+	private List<Piece> onBoardPieces = new ArrayList<>();
+	private List<Piece> capturedPieces = new ArrayList<>();
 
 	public ChessMatch() {
 		board = new Board(8, 8);
@@ -45,6 +51,14 @@ public class ChessMatch {
 		return currentPlayer;
 	}
 
+	public List<Piece> getOnBoardPieces() {
+		return onBoardPieces;
+	}
+
+	public List<Piece> getCapturedPieces() {
+		return capturedPieces;
+	}
+
 	public Position coord(char column,Integer row) {
 		ChessPosition cp = new ChessPosition(column, row);
 		return cp.toPosition();
@@ -58,6 +72,13 @@ public class ChessMatch {
 		board.placePiece(new Rook(board,Color.BLACK), coord('a',8));
 		board.placePiece(new Rook(board,Color.WHITE), coord('h',1));
 		board.placePiece(new Rook(board,Color.BLACK), coord('h',8));
+		
+		Piece[][] p = board.getPieces();
+		for(int i=0;i<8;i++)
+			for(int j=0;j<8;j++)
+			{
+				if(p[i][j] != null)onBoardPieces.add(p[i][j]);
+			}
 	}
 	
 	private void validateSourcePosition(ChessPosition cp) {
@@ -73,8 +94,15 @@ public class ChessMatch {
 	
 	private Piece makeMove(ChessPosition source,ChessPosition target) {
 		Piece pEated = board.removePiece(target.toPosition());
-		Piece p = board.removePiece(source.toPosition());
-		board.placePiece(p, target.toPosition());
+		Piece pMoving = board.removePiece(source.toPosition());
+		board.placePiece(pMoving, target.toPosition());
+		
+		onBoardPieces.get(onBoardPieces.indexOf(pMoving)).setPosition(target.toPosition());
+		if(pEated != null) {
+			capturedPieces.add(pEated);
+			onBoardPieces.remove(pEated);
+		}
+		
 		return pEated;
 	}
 	
