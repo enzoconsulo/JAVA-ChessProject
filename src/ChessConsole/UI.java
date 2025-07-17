@@ -36,7 +36,25 @@ public class UI {
 		for (int i = 0; i < board.getRows(); i++) {
 			System.out.print(8 - i +" |");
 			for (int j = 0; j < board.getColumns(); j++) {
-				System.out.print(" " + printPiece((ChessPiece) pieces[i][j])+ " ");
+				System.out.print(printPiece((ChessPiece) pieces[i][j],false));
+			}
+		System.out.println();
+		}
+		System.out.println("----------------------------");
+		System.out.println("  | a  b  c  d  e  f  g  h");
+	}
+	
+	public static void printTable(ChessMatch cm,boolean[][] sourcePossibleMoves) {
+		Board board = cm.getBoard();
+		Piece[][] pieces = board.getPieces();
+		for (int i = 0; i < board.getRows(); i++) {
+			System.out.print(8 - i +" |");
+			for (int j = 0; j < board.getColumns(); j++) {
+				if(sourcePossibleMoves[i][j]) {
+				System.out.print(printPiece((ChessPiece) pieces[i][j],true));
+				}else{
+				System.out.print(printPiece((ChessPiece) pieces[i][j],false));
+				}
 			}
 		System.out.println();
 		}
@@ -44,14 +62,21 @@ public class UI {
 		System.out.println("  | a  b  c  d  e  f  g  h");
 	}
 
-	private static String printPiece(ChessPiece piece) {
-		if (piece == null) return "-"; 
+	private static String printPiece(ChessPiece piece,boolean possibleCapture) {
+		if (piece == null && possibleCapture) {
+			return(" " + ANSI_RED + "-" + ANSI_RESET +" "); 
+		}else if(piece == null){
+			return(" - ");
+		}
 		
 		 if (piece.getColor() == Color.WHITE) {
-             return(ANSI_WHITE + piece + ANSI_RESET);
+             if(possibleCapture)return(ANSI_RED + "(" + ANSI_RESET + ANSI_WHITE + piece + ANSI_RESET+ANSI_RED + ")" + ANSI_RESET );
+			 return(" " + ANSI_WHITE + piece + ANSI_RESET + " ");
          }
          else {
-             return(ANSI_BLACK + piece + ANSI_RESET);
+        	 if(possibleCapture)return(ANSI_RED + "(" + ANSI_RESET + ANSI_BLACK + piece + ANSI_RESET+ANSI_RED + ")" + ANSI_RESET 
+        			 );
+             return(" " + ANSI_BLACK + piece + ANSI_RESET + " ");
          }
 	}	 
 	
@@ -86,4 +111,6 @@ public class UI {
 	        System.out.println();
 	    }
 	}
+	
+	
 }

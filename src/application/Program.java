@@ -23,8 +23,13 @@ public class Program {
 				System.out.print("Source:");
 				ChessPosition source = UI.readChessPosition(sc);
 				
+				UI.clearScreen();
+				boolean[][] possibleMoves = chessmatch.possibleMoves(source);
+				UI.printTable(chessmatch, possibleMoves);
+				
 				System.out.print("Target:");
 				ChessPosition target = UI.readChessPosition(sc);
+				
 				
 				ChessPiece captured = chessmatch.performChessMove(source,target);
 				if(captured!= null)System.out.println("Captured piece:"+captured + "\n Press Enter to next movement");
