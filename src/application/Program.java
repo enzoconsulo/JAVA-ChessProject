@@ -19,7 +19,7 @@ public class Program {
 			
 			try {
 				UI.printTable(chessmatch);
-				
+
 				System.out.print("Source:");
 				ChessPosition source = UI.readChessPosition(sc);
 				
@@ -30,11 +30,7 @@ public class Program {
 				System.out.print("Target:");
 				ChessPosition target = UI.readChessPosition(sc);
 				
-				ChessPiece captured = chessmatch.performChessMove(source,target);
-				if(captured!= null) {
-					System.out.println("Captured piece:"+captured + "\n Press Enter to next movement");
-					sc.nextLine();
-				}
+				chessmatch.performChessMove(source,target);
 				
 				UI.clearScreen();
 				
