@@ -115,6 +115,7 @@ public class ChessMatch {
 	public void undoMove(ChessPosition source,ChessPosition target,Piece pEated) {
 		Piece pMoving = board.removePiece(target.toPosition());
 		board.placePiece(pMoving, source.toPosition());
+		onBoardPieces.get(onBoardPieces.indexOf(pMoving)).setPosition(source.toPosition());
 		
 		if(pEated != null) {
 		board.placePiece(pEated, target.toPosition());
@@ -135,8 +136,9 @@ public class ChessMatch {
 		}
 		
 		check = testCheck(opponent(currentPlayer));
+		checkMate = testCheckMate(opponent(currentPlayer));
 		
-		nextTurn();
+		if(!checkMate)nextTurn();
 		return (ChessPiece)capturedPiece;
 
 	}
@@ -162,7 +164,8 @@ public class ChessMatch {
 								.filter(x->x.getColor()==color && x instanceof King)
 								.collect(Collectors.toList());
 		
-		if(temp.size()!=1) throw new IllegalStateException("There is no " + color + " king on the board");
+		if(temp.size()!=1) 
+			throw new IllegalStateException("There is no " + color + " king on the board");
 		
 		return (ChessPiece)temp.get(0);
 	}
@@ -178,8 +181,34 @@ public class ChessMatch {
 			if(p.possibleMove(myKing.getPosition()))
 				return true;
 		}
-		
 		return false;
 	}
 	
+	private boolean testCheckMate(Color myColor) {
+		if(!testCheck(myColor))return false;
+		
+		List<Piece> myPieceList= onBoardPieces.stream()
+				.map(x->(ChessPiece)x)
+				.filter(x->x.getColor() == myColor)
+				.collect(Collectors.toList());
+		
+		for(Piece p : myPieceList) {
+			boolean temp[][] = p.possibleMoves();
+			ChessPosition sourceTest = ChessPosition.fromPosition(p.getPosition());
+			
+			for(int i=0;i<temp.length;i++){
+				for(int j=0;j<temp[i].length;j++) {
+					if(temp[i][j]) {
+						Position targetTest = new Position(i,j);
+						Piece capturedPiece = makeMove(sourceTest, ChessPosition.fromPosition(targetTest));
+						boolean isCheck = testCheck(myColor);
+						undoMove(sourceTest, ChessPosition.fromPosition(targetTest), capturedPiece);
+						if(!isCheck)return false;
+					}	
+				}
+			}
+		}
+		return true;
+	}
+
 }

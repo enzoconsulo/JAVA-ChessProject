@@ -37,7 +37,7 @@ public class UI {
 		Piece[][] pieces = board.getPieces();
 		System.out.println("Current turn: " + cm.getTurn());
 		System.out.println("Waiting "+cm.getCurrentPlayer()+" to play...");
-		if(cm.getCheck())System.out.println(ANSI_RED_BACKGROUND + "CHECK !" + ANSI_RESET);
+		if(cm.getCheck()&&!cm.getCheckMate())System.out.println(ANSI_RED_BACKGROUND + "CHECK !" + ANSI_RESET);
 		for (int i = 0; i < board.getRows(); i++) {
 			System.out.print(8 - i +" |");
 			for (int j = 0; j < board.getColumns(); j++) {
@@ -48,7 +48,7 @@ public class UI {
 		System.out.println("----------------------------");
 		System.out.println("  | a  b  c  d  e  f  g  h");
 		printCapturedPieces(cm);
-		System.out.println("----------------------------");
+		if(!cm.getCheckMate())System.out.println("----------------------------");
 	}
 	
 	public static void printTable(ChessMatch cm,boolean[][] sourcePossibleMoves) {
@@ -148,6 +148,16 @@ public class UI {
 				System.out.print(ANSI_BLACK +"[" + p +"] " + ANSI_RESET);
 			}
 		System.out.println();
+	}
+	
+	public static void  checkMateMessage(ChessMatch cm) {
+		printTable(cm);
+		System.out.println("-------------------------------\n"+
+						   "|"+"          "+ANSI_RED_BACKGROUND+ "CHECKMATE!"+ ANSI_RESET + "         |\n"+
+						   "-------------------------------\n"+
+						   "        The Game is Over");
+		System.out.println("          "+cm.getCurrentPlayer() + " WINS !!");
+		
 	}
 	
 }

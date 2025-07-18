@@ -37,14 +37,16 @@ public class Program {
 				}catch(ChessException e){
 					System.out.println(e.getMessage()+"\n Press Enter to Continue.\n");
 					sc.nextLine();
+					UI.clearScreen();
 				}catch(InputMismatchException e){
 					System.out.println(e.getMessage()+"\n Press Enter to Continue.\n");
 					sc.nextLine();
+					UI.clearScreen();
 			}
 		}
 		
-		//sc.close() (when checkmate = true)(not implementable now)
-		
+		UI.checkMateMessage(chessmatch);
+		sc.close();
 		
 	}
 
