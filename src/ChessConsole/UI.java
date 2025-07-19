@@ -153,7 +153,7 @@ public class UI {
 	public static void  checkMateMessage(ChessMatch cm) {
 		printTable(cm);
 		System.out.println("-------------------------------\n"+
-						   "|"+"          "+ANSI_RED_BACKGROUND+ "CHECKMATE!"+ ANSI_RESET + "         |\n"+
+						   "|"+ANSI_RED_BACKGROUND+"          "+ "CHECKMATE!"+ "         \n"+ ANSI_RESET+"|"+
 						   "-------------------------------\n"+
 						   "        The Game is Over");
 		System.out.println("          "+cm.getCurrentPlayer() + " WINS !!");
