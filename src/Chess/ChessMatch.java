@@ -8,6 +8,7 @@ import Board.Board;
 import Board.Piece;
 import Board.Position;
 import Chess.Pieces.King;
+import Chess.Pieces.Pawn;
 import Chess.Pieces.Rook;
 
 public class ChessMatch {
@@ -78,6 +79,12 @@ public class ChessMatch {
 		board.placePiece(new Rook(board,Color.BLACK), coord('a',8));
 		board.placePiece(new Rook(board,Color.WHITE), coord('h',1));
 		board.placePiece(new Rook(board,Color.BLACK), coord('h',8));
+		
+		for(char i ='a';i<='h';i++) {
+			board.placePiece(new Pawn(board,Color.WHITE), coord(i,2));
+			board.placePiece(new Pawn(board,Color.BLACK), coord(i,7));
+		}
+		
 		
 		Piece[][] p = board.getPieces();
 		for(int i=0;i<8;i++)
