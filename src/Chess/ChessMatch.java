@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import Board.Board;
 import Board.Piece;
 import Board.Position;
+import Chess.Pieces.Bishop;
 import Chess.Pieces.King;
 import Chess.Pieces.Pawn;
 import Chess.Pieces.Rook;
@@ -84,6 +85,11 @@ public class ChessMatch {
 			board.placePiece(new Pawn(board,Color.WHITE), coord(i,2));
 			board.placePiece(new Pawn(board,Color.BLACK), coord(i,7));
 		}
+		
+		board.placePiece(new Bishop(board,Color.BLACK), coord('c',8));
+		board.placePiece(new Bishop(board,Color.BLACK), coord('f',8));
+		board.placePiece(new Bishop(board,Color.WHITE), coord('c',1));
+		board.placePiece(new Bishop(board,Color.WHITE), coord('f',1));
 		
 		
 		Piece[][] p = board.getPieces();
