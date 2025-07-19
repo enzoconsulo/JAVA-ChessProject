@@ -9,6 +9,7 @@ import Board.Piece;
 import Board.Position;
 import Chess.Pieces.Bishop;
 import Chess.Pieces.King;
+import Chess.Pieces.Knight;
 import Chess.Pieces.Pawn;
 import Chess.Pieces.Rook;
 
@@ -90,6 +91,13 @@ public class ChessMatch {
 		board.placePiece(new Bishop(board,Color.BLACK), coord('f',8));
 		board.placePiece(new Bishop(board,Color.WHITE), coord('c',1));
 		board.placePiece(new Bishop(board,Color.WHITE), coord('f',1));
+		
+		board.placePiece(new Knight(board,Color.BLACK), coord('b',8));
+		board.placePiece(new Knight(board,Color.BLACK), coord('g',8));
+		board.placePiece(new Knight(board,Color.WHITE), coord('b',1));
+		board.placePiece(new Knight(board,Color.WHITE), coord('g',1));
+		
+		
 		
 		
 		Piece[][] p = board.getPieces();
