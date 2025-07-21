@@ -405,7 +405,7 @@ public class ChessMatch {
 				break;
 				
 			default:
-				throw new IllegalArgumentException("Invalid Promotion type !!");
+				return promoted;
 			
 		}
 		board.placePiece(choose, promotedPosition);

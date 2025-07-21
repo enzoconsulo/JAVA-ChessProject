@@ -35,6 +35,11 @@ public class Program {
 				if(chessmatch.getPromoted() != null) {
 					System.out.print("Promotion! \n >Choose your Chess Piece type to promote( Q / R / B / N ):");
 					String input = sc.nextLine();
+					while(input.toLowerCase().charAt(0) != 'q' && input.toLowerCase().charAt(0) != 'r' && input.toLowerCase().charAt(0) != 'b' && input.toLowerCase().charAt(0) != 'n') {
+						System.out.print(" Invalid Input!! >Choose your Chess Piece type to promote( Q / R / B / N ):");
+						input = sc.nextLine();
+					}
+					
 					chessmatch.replacePromotedPiece(input);
 				}
 				
@@ -48,7 +53,7 @@ public class Program {
 					System.out.println(e.getMessage()+"\n Press Enter to Continue.\n");
 					sc.nextLine();
 					UI.clearScreen();
-			}
+				}
 		}
 		
 		UI.checkMateMessage(chessmatch);
