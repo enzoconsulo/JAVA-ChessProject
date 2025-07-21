@@ -2,13 +2,17 @@ package Chess.Pieces;
 
 import Board.Board;
 import Board.Position;
+import Chess.ChessMatch;
 import Chess.ChessPiece;
 import Chess.Color;
 
 public class Pawn extends ChessPiece{
 
-	public Pawn(Board board, Color color) {
+	private ChessMatch cm;
+	
+	public Pawn(Board board, Color color,ChessMatch cm) {
 		super(board, color);
+		this.cm = cm;
 	}
 
 	@Override
@@ -62,6 +66,31 @@ public class Pawn extends ChessPiece{
 		p.setValues(pawnDirectionByColor, position.getColumn()+1);
 		if(getBoard().positionExists(p)) {
 			if(getBoard().piece(p) != null && isThereOpponentPiece(p)) {
+				temp[p.getRow()][p.getColumn()] = true;
+			}else {
+				temp[p.getRow()][p.getColumn()] = false;
+			}
+		}
+		
+		//#Special Move 
+		//En Passant 
+		
+		//west
+		p.setValues(pawnDirectionByColor, position.getColumn()-1);
+		Position pawnEnPassantPosition = new Position(position.getRow(),position.getColumn()-1);
+		if(getBoard().positionExists(p) && cm.getEnPassantVulnerable() != null) {
+			if(getBoard().piece(p) == null && cm.getEnPassantVulnerable() == cm.getBoard().piece(pawnEnPassantPosition)) {
+				temp[p.getRow()][p.getColumn()] = true;
+			}else {
+				temp[p.getRow()][p.getColumn()] = false;
+			}
+		}
+		
+		//east
+		p.setValues(pawnDirectionByColor, position.getColumn()+1);
+		pawnEnPassantPosition = new Position(position.getRow(),position.getColumn()+1);
+		if(getBoard().positionExists(p) && cm.getEnPassantVulnerable() != null) {
+			if(getBoard().piece(p) == null && cm.getEnPassantVulnerable() == cm.getBoard().piece(pawnEnPassantPosition)) {
 				temp[p.getRow()][p.getColumn()] = true;
 			}else {
 				temp[p.getRow()][p.getColumn()] = false;

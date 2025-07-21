@@ -34,6 +34,7 @@ public class ChessMatch {
 		currentPlayer = Color.WHITE;
 		check = false;
 		checkMate = false;
+		enPassantVulnerable = null;
 		InitialSetup();
 	}
 
@@ -68,6 +69,10 @@ public class ChessMatch {
 	public Boolean getCheck() {
 		return check;
 	}
+	
+	public ChessPiece getEnPassantVulnerable() {
+		return enPassantVulnerable;
+	}
 
 	public Position coord(char column,Integer row) {
 		ChessPosition cp = new ChessPosition(column, row);
@@ -87,8 +92,8 @@ public class ChessMatch {
 		
 		//place Pawns
 		for(char i ='a';i<='h';i++) {
-			board.placePiece(new Pawn(board,Color.WHITE), coord(i,2));
-			board.placePiece(new Pawn(board,Color.BLACK), coord(i,7));
+			board.placePiece(new Pawn(board,Color.WHITE,this), coord(i,3));
+			board.placePiece(new Pawn(board,Color.BLACK,this), coord(i,7));
 		}
 		
 		//place Bishops
@@ -169,7 +174,25 @@ public class ChessMatch {
 		    ((ChessPiece)rook).increaseMoveCount();
 		    onBoardPieces.get(onBoardPieces.indexOf(rook)).setPosition(rookTarget);
 		}
+		
+		//en passant 	
+		if(enPassantVulnerable != null) {  //verify for the first move, where enPassantVulnerable will be null
+			//west
+			if(pMoving instanceof Pawn && board.piece(tgt.getRow()-1,tgt.getColumn()) == enPassantVulnerable) {
+			pEated = board.removePiece(enPassantVulnerable.getPosition());
+			capturedPieces.add(pEated);
+			onBoardPieces.remove(pEated);
+			}
 			
+			//east
+			if(pMoving instanceof Pawn && board.piece(tgt.getRow()+1,tgt.getColumn()) == enPassantVulnerable) {
+				pEated = board.removePiece(enPassantVulnerable.getPosition());
+				capturedPieces.add(pEated);
+				onBoardPieces.remove(pEated);
+			}
+		}
+		
+				
 		return pEated;
 	}
 	
@@ -220,7 +243,7 @@ public class ChessMatch {
 	public ChessPiece performChessMove(ChessPosition sourcePosition,ChessPosition targetPosition) {
 		validateSourcePosition(sourcePosition);
 		validateTargetPosition(sourcePosition,targetPosition);
-		
+
 		Piece capturedPiece = makeMove(sourcePosition,targetPosition);
 		
 		if(testCheck(currentPlayer)) {
@@ -232,6 +255,19 @@ public class ChessMatch {
 		checkMate = testCheckMate(opponent(currentPlayer));
 		
 		if(!checkMate)nextTurn();
+		
+		//##special move
+		// En Passant
+		if(board.piece(targetPosition.toPosition()) instanceof Pawn 
+				&& sourcePosition.getRow()-targetPosition.getRow() == +2 || sourcePosition.getRow()-targetPosition.getRow() == -2) {
+			enPassantVulnerable = (ChessPiece)board.piece(targetPosition.toPosition());
+			System.out.println("En passant vulnerable"+enPassantVulnerable.getChessPosition());
+		}else {
+			enPassantVulnerable = null;
+		}
+		
+		
+		
 		return (ChessPiece)capturedPiece;
 
 	}
