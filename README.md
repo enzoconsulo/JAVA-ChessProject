@@ -29,43 +29,48 @@ This project was developed following the instructions detailed in the [Project S
 
 ## Project Structure
 
+Use this structure to organize the code and resources:
+
 ```
-JAVA-ChessProject/
- ├── Enunciado.pdf    # Project specification
- ├── .classpath
- ├── .project
- ├── .settings/
- ├── src/
- │   ├── board/
- │   │   ├── Board.java
- │   │   ├── Piece.java
- │   │   ├── Position.java
- │   │   └── ChessException.java
- │   ├── chess/
- │   │   ├── ChessMatch.java
- │   │   ├── ChessPiece.java
- │   │   ├── ChessPosition.java
- │   │   └── Color.java
- │   └── application/
- │       └── Program.java  (contains `main` and console UI)
- └── README.md
+ChessProject/
+ ├─ src/
+ │   ├─ application/
+ │   │   └─ Program.java         # Main class (console UI)
+ │   ├─ Board/
+ │   │   ├─ Board.java
+ │   │   ├─ BoardException.java
+ │   │   ├─ Piece.java
+ │   │   └─ Position.java
+ │   ├─ Chess/
+ │   │   ├─ ChessException.java
+ │   │   ├─ ChessMatch.java
+ │   │   ├─ ChessPiece.java
+ │   │   ├─ ChessPosition.java
+ │   │   └─ Color.java
+ │   ├─ Chess/Pieces/
+ │   │   ├─ Bishop.java
+ │   │   ├─ King.java
+ │   │   ├─ Knight.java
+ │   │   ├─ Pawn.java
+ │   │   ├─ Queen.java
+ │   │   └─ Rook.java
+ │   └─ ChessConsole/
+ │       └─ UI.java             # (alternative entry point)
+ ├─ exampleMatchClips/           # MP4 clips of recorded game moves
+ ├─ Enunciado.pdf                # Project specification PDF
+ ├─ README.md                    # This file
 ```
 
-## Example Match Clips
+### Streaming MP4s on GitHub
 
-Check out some recorded game clips to see the moves in action: [exampleMatchClips](./exampleMatchClips/)
+You can click any MP4 in the **exampleMatchClips** folder on GitHub, and it will open a built‑in video player—no need to download locally. If you prefer embedding in Markdown, use:
 
-## How to Run
-
-1. Clone or import this folder into your Java IDE (Eclipse, IntelliJ, etc.).
-2. Ensure project is set to JDK 8 or higher.
-3. Run the `application.Program` (or `UI`/`Program` class) as a Java application.
-4. Follow on-screen instructions to enter moves in standard chess notation (e.g., `e2 e4`).
-
-## Notes
-
-* This is strictly a backend console application; no GUI or web front-end.
-* All input/output is via the terminal.
+```html
+<video width="480" controls>
+  <source src="https://raw.githubusercontent.com/enzoconsulo/JAVA-ChessProject/main/exampleMatchClips/Move1.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+```
 
 ---
 
