@@ -55,22 +55,27 @@ ChessProject/
  │   │   ├─ Queen.java
  │   │   └─ Rook.java
  │   └─ ChessConsole/
- │       └─ UI.java             # (alternative entry point)
+ │       └─ UI.java             
  ├─ exampleMatchClips/           # MP4 clips of recorded game moves
  ├─ Enunciado.pdf                # Project specification PDF
  ├─ README.md                    # This file
 ```
 
-### Streaming MP4s on GitHub
+## Example Match Clips
 
-You can click any MP4 in the **exampleMatchClips** folder on GitHub, and it will open a built‑in video player—no need to download locally. If you prefer embedding in Markdown, use:
+Check out some recorded game clips to see the moves in action: [exampleMatchClips](./exampleMatchClips/)
 
-```html
-<video width="480" controls>
-  <source src="https://raw.githubusercontent.com/enzoconsulo/JAVA-ChessProject/main/exampleMatchClips/Move1.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-```
+## How to Run
+
+1. Clone or import this folder into your Java IDE (Eclipse, IntelliJ, etc.).
+2. Ensure project is set to JDK 8 or higher.
+3. Run the `application.Program` (or `UI`/`Program` class) as a Java application.
+4. Follow on-screen instructions to enter moves in standard chess notation (e.g., `e2 e4`).
+
+## Notes
+
+* This is strictly a backend console application; no GUI or web front-end.
+* All input/output is via the terminal.
 
 ---
 
