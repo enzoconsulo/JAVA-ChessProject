@@ -96,11 +96,9 @@ public class ChessMatch {
 		
 		//place Pawns
 		for(char i ='a';i<='h';i++) {
-			board.placePiece(new Pawn(board,Color.WHITE,this), coord(i,3));
-			board.placePiece(new Pawn(board,Color.BLACK,this), coord(i,6));
+			board.placePiece(new Pawn(board,Color.WHITE,this), coord(i,2));
+			board.placePiece(new Pawn(board,Color.BLACK,this), coord(i,7));
 		}
-		
-		board.placePiece(new Pawn(board,Color.BLACK,this), coord('a',2));
 		
 		//place Bishops
 		board.placePiece(new Bishop(board,Color.BLACK), coord('c',8));
