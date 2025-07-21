@@ -208,10 +208,22 @@ public class ChessMatch {
 		onBoardPieces.get(onBoardPieces.indexOf(pMoved)).setPosition(src);
 		
 		if(pEated != null) {
-			board.placePiece(pEated, tgt);
-			capturedPieces.remove(pEated);
-			onBoardPieces.add(pEated);
-			onBoardPieces.get(onBoardPieces.indexOf(pEated)).setPosition(tgt);
+			
+			//en passant
+			if(enPassantVulnerable != null && pEated == enPassantVulnerable) {
+				int positionRowEnpassant = (((ChessPiece)pMoved).getColor() == Color.WHITE ? tgt.getRow() +1 : tgt.getRow() -1);
+				Position positionEnpassant = new Position(positionRowEnpassant,tgt.getColumn());
+				board.placePiece(pEated, positionEnpassant);
+				onBoardPieces.add(pEated);
+				capturedPieces.remove(pEated);
+				onBoardPieces.get(onBoardPieces.indexOf(pEated)).setPosition(enPassantVulnerable.getPosition());
+			}else {
+				board.placePiece(pEated, tgt);
+				capturedPieces.remove(pEated);
+				onBoardPieces.add(pEated);
+				onBoardPieces.get(onBoardPieces.indexOf(pEated)).setPosition(tgt);
+			}
+				
 		}
 		
 		//#special move 
@@ -238,6 +250,7 @@ public class ChessMatch {
 		    ((ChessPiece)rook).decreaseMoveCount();
 		    onBoardPieces.get(onBoardPieces.indexOf(rook)).setPosition(rookOriginalPosition);
 		}
+	
 	}
 	
 	public ChessPiece performChessMove(ChessPosition sourcePosition,ChessPosition targetPosition) {
