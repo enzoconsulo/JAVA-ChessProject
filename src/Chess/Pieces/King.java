@@ -133,22 +133,21 @@ public class King extends ChessPiece{
 			}
 		}
 		
+		
+		//major castling
 		p.setValues(position.getRow(), position.getColumn() - 2);
 		if (getBoard().positionExists(p)) {
-		    Position rookPosition = new Position(
-		        position.getRow(),
-		        position.getColumn() - 4
-		    );
+		    Position rookPosition = new Position(position.getRow(),position.getColumn() - 4);
 		    if (getBoard().positionExists(rookPosition)) {
 		        Position p1 = new Position(position.getRow(), position.getColumn() - 1);
 		        Position p2 = new Position(position.getRow(), position.getColumn() - 2);
 		        Position p3 = new Position(position.getRow(), position.getColumn() - 3);
 
 		        if (
-		            rookToCastling(rookPosition) &&
-		            getMoveCount() == 0 &&
+		            rookToCastling(rookPosition) &&  //have a rook capable to rook
+		            getMoveCount() == 0 &&			 // if king hasn't moves before
 		            !getBoard().thereIsAPiece(p1) &&
-		            !getBoard().thereIsAPiece(p2) &&
+		            !getBoard().thereIsAPiece(p2) && //hasn't pieces beside rook and king
 		            !getBoard().thereIsAPiece(p3)
 		        ) {
 		            temp[p.getRow()][p.getColumn()] = true;

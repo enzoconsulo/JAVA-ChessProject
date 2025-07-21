@@ -208,12 +208,12 @@ public class ChessMatch {
 		// major castling
 		if (pMoved instanceof King && tgt.getColumn() == src.getColumn() - 2) {
 		    Position rookMoved = new Position(src.getRow(), src.getColumn() - 1);
-		    Position rookOriginal = new Position(src.getRow(), src.getColumn() - 4);
+		    Position rookOriginalPosition = new Position(src.getRow(), src.getColumn() - 4);
 		    
 		    Piece rook = board.removePiece(rookMoved);
-		    board.placePiece(rook, rookOriginal);
+		    board.placePiece(rook, rookOriginalPosition);
 		    ((ChessPiece)rook).decreaseMoveCount();
-		    onBoardPieces.get(onBoardPieces.indexOf(rook)).setPosition(rookOriginal);
+		    onBoardPieces.get(onBoardPieces.indexOf(rook)).setPosition(rookOriginalPosition);
 		}
 	}
 	
