@@ -57,8 +57,6 @@ public class Pawn extends ChessPiece{
 		if(getBoard().positionExists(p)) {
 			if(getBoard().piece(p) != null && isThereOpponentPiece(p)) {
 				temp[p.getRow()][p.getColumn()] = true;
-			}else {
-				temp[p.getRow()][p.getColumn()] = false;
 			}
 		}
 		
@@ -67,8 +65,6 @@ public class Pawn extends ChessPiece{
 		if(getBoard().positionExists(p)) {
 			if(getBoard().piece(p) != null && isThereOpponentPiece(p)) {
 				temp[p.getRow()][p.getColumn()] = true;
-			}else {
-				temp[p.getRow()][p.getColumn()] = false;
 			}
 		}
 		
@@ -81,8 +77,6 @@ public class Pawn extends ChessPiece{
 		if(getBoard().positionExists(p) && cm.getEnPassantVulnerable() != null) {
 			if(getBoard().piece(p) == null && cm.getEnPassantVulnerable() == cm.getBoard().piece(pawnEnPassantPosition)) {
 				temp[p.getRow()][p.getColumn()] = true;
-			}else {
-				temp[p.getRow()][p.getColumn()] = false;
 			}
 		}
 		
@@ -92,8 +86,6 @@ public class Pawn extends ChessPiece{
 		if(getBoard().positionExists(p) && cm.getEnPassantVulnerable() != null) {
 			if(getBoard().piece(p) == null && cm.getEnPassantVulnerable() == cm.getBoard().piece(pawnEnPassantPosition)) {
 				temp[p.getRow()][p.getColumn()] = true;
-			}else {
-				temp[p.getRow()][p.getColumn()] = false;
 			}
 		}
 		

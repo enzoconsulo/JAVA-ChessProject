@@ -32,6 +32,12 @@ public class Program {
 				
 				chessmatch.performChessMove(source,target);
 				
+				if(chessmatch.getPromoted() != null) {
+					System.out.print("Promotion! \n >Choose your Chess Piece type to promote( Q / R / B / N ):");
+					String input = sc.nextLine();
+					chessmatch.replacePromotedPiece(input);
+				}
+				
 				UI.clearScreen();
 				
 				}catch(ChessException e){

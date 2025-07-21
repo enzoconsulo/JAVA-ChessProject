@@ -74,6 +74,10 @@ public class ChessMatch {
 		return enPassantVulnerable;
 	}
 
+	public ChessPiece getPromoted() {
+		return promoted;
+	}
+
 	public Position coord(char column,Integer row) {
 		ChessPosition cp = new ChessPosition(column, row);
 		return cp.toPosition();
@@ -93,8 +97,10 @@ public class ChessMatch {
 		//place Pawns
 		for(char i ='a';i<='h';i++) {
 			board.placePiece(new Pawn(board,Color.WHITE,this), coord(i,3));
-			board.placePiece(new Pawn(board,Color.BLACK,this), coord(i,7));
+			board.placePiece(new Pawn(board,Color.BLACK,this), coord(i,6));
 		}
+		
+		board.placePiece(new Pawn(board,Color.BLACK,this), coord('a',2));
 		
 		//place Bishops
 		board.placePiece(new Bishop(board,Color.BLACK), coord('c',8));
@@ -176,7 +182,10 @@ public class ChessMatch {
 		}
 		
 		//en passant 	
-		if(enPassantVulnerable != null) {  //verify for the first move, where enPassantVulnerable will be null
+		if(enPassantVulnerable != null 
+				&& board.positionExists(new Position(tgt.getRow()-1,tgt.getColumn()))
+				&& board.positionExists(new Position(tgt.getRow()+1,tgt.getColumn()))) {  //verify for the first move, where enPassantVulnerable will be null
+																						  //and values must exists(to don't interview in others types of moves)
 			//west
 			if(pMoving instanceof Pawn && board.piece(tgt.getRow()-1,tgt.getColumn()) == enPassantVulnerable) {
 			pEated = board.removePiece(enPassantVulnerable.getPosition());
@@ -269,14 +278,27 @@ public class ChessMatch {
 		
 		if(!checkMate)nextTurn();
 		
+		
+		
 		//##special move
 		// En Passant
 		if(board.piece(targetPosition.toPosition()) instanceof Pawn 
 				&& sourcePosition.getRow()-targetPosition.getRow() == +2 || sourcePosition.getRow()-targetPosition.getRow() == -2) {
+			
 			enPassantVulnerable = (ChessPiece)board.piece(targetPosition.toPosition());
-			System.out.println("En passant vulnerable"+enPassantVulnerable.getChessPosition());
+
 		}else {
 			enPassantVulnerable = null;
+		}
+		
+		//Promotion
+		promoted = null;
+		int enemyRow = (currentPlayer == Color.WHITE ? 1 : 8); //inversed because the logic to row is 8-x
+		if(board.piece(targetPosition.toPosition()) instanceof Pawn
+				&& targetPosition.getRow() == enemyRow ) {
+			
+			promoted = (ChessPiece)board.piece(targetPosition.toPosition());
+			promoted = replacePromotedPiece("Q");
 		}
 		
 		
@@ -351,6 +373,45 @@ public class ChessMatch {
 			}
 		}
 		return true;
+	}
+	
+	public ChessPiece replacePromotedPiece(String input){
+		if(promoted == null) {
+			throw new IllegalStateException("There is no piece to be promoted !");
+		}
+		
+		ChessPiece choose = null;
+		Position promotedPosition = promoted.getPosition();
+		
+		board.removePiece(promotedPosition);
+		onBoardPieces.remove(promoted);
+		
+		switch(input.toLowerCase().charAt(0)) {
+			
+			case 'q':
+				choose = new Queen(board,promoted.getColor());
+				break;
+				
+			case 'b':
+				choose = new Bishop(board,promoted.getColor());
+				break;
+				
+			case 'n':
+				choose = new Knight(board,promoted.getColor());
+				break;
+				
+			case 'r':
+				choose = new Rook(board,promoted.getColor());
+				break;
+				
+			default:
+				throw new IllegalArgumentException("Invalid Promotion type !!");
+			
+		}
+		board.placePiece(choose, promotedPosition);
+		onBoardPieces.add(choose);
+		
+		return choose;
 	}
 
 }
